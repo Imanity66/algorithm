@@ -18,7 +18,8 @@ def preorder_traversal(self, root):
     return res
 
 def helper (self, root, res):
-    if not root:
+ #   if not root:
+     if root is None:
         return
     res.append(root.val)
     self.helper(root.left, res)
@@ -40,13 +41,15 @@ def helper(self, root, res):
     self.helper(root.left, res)
     self.helper(root.right, res)
     res.append(root.val)
-    
+
+#if root is size n , then O(n)
 def get_height(root):
     if not root:
         return 0
     left = get_height(root.left)
     right = get_height(root.right)
     return 1 + max(left, right)
+
 #time:O(n) space:O(max(len(q)))
 def level(root):
     q = [root]
@@ -66,7 +69,7 @@ def level(root):
                 q = next
                 next = []
                 line = []
-                
+#做一个分支的就行,用递归 
 def upside_bst(root):
     if not root:
         return root

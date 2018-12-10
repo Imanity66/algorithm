@@ -13,7 +13,7 @@ class TreeNode:
         self.left = None
         self.right = None
         self.total_left = 0
-        
+#这个不明白
 def change_subtree(node):
     if node is None:
         return 0
@@ -102,7 +102,7 @@ def inorder(root, prev, res):
     if not root:
         return
     inorder(root.left, prev, res)
-    if prev[0] and prev[0] >= root.val:
+    if prev[0] and (prev[0] >= root.val):
         res[0] = False
     prev[0] = root.val
     

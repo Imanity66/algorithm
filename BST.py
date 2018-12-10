@@ -13,23 +13,23 @@ class TreeNode(object):
         self.size = 0
 
 def BST(arr):
-    if not arr: 
+    if not arr:
         return None
-  
-    # find middle 
+
+    # find middle
     mid = int((len(arr)) / 2)
-      
-    # make the middle element the root 
-    root = TreeNode(arr[mid]) 
-      
-    # left subtree of root has all 
-    # values <arr[mid] 
-    root.left = BST(arr[:mid]) 
-      
-    # right subtree of root has all  
-    # values >arr[mid] 
-    root.right = BST(arr[mid+1:]) 
-    return root 
+
+    # make the middle element the root
+    root = TreeNode(arr[mid])
+
+    # left subtree of root has all
+    # values <arr[mid]
+    root.left = BST(arr[:mid])
+
+    # right subtree of root has all
+    # values >arr[mid]
+    root.right = BST(arr[mid+1:])
+    return root
 
 array = list(np.arange(5))
 root = BST(array)
@@ -41,13 +41,13 @@ class Solution:
         """
         :type root: TreeNode
         :rtype: int
-        """ 
-        if root is None: 
-            return 0 
-        else: 
-            left_height = self.maxDepth(root.left) 
-            right_height = self.maxDepth(root.right) 
-            return max(left_height, right_height) + 1 
+        """
+        if root is None:
+            return 0
+        else:
+            left_height = self.maxDepth(root.left)
+            right_height = self.maxDepth(root.right)
+            return max(left_height, right_height) + 1
 
 # Given a binary tree, determine if it is height-balanced.
     def isBalanced(self, root):
@@ -62,7 +62,7 @@ class Solution:
             return False
         else:
             return (self.isBalanced(root.left) and self.isBalanced(root.right))
-    
+
     def size(self, root):
         if root is None:
             return 0
@@ -81,23 +81,8 @@ class Solution:
             return 0
         left = get_size(root.left)
         right = get_size(root.right)
-        return 1 + left + right 
+        return 1 + left + right
 
-    def height(self, root):
-        """
-        :param root: TreeNode
-        :return: int
-        """
-        if root is None:
-            return 0
-        elif (root.left is None and root.right is None):
-            return 1
-        elif root.right is None:
-            return 1 + self.height(root.left)
-        elif root.left is None:
-            return 1 + self.height(root.right)
-        else:
-            return 1 + max(self.height(root.left), self.height(root.right))
     def get_height(root):
         if not root:
             return 0
@@ -125,25 +110,25 @@ class Solution:
             if root.right: helper(root.right, d - 1, pos + 2 ** (d - 1))
         helper(root, d - 1, 2 ** (d - 1) - 1)
         return self.res
-    
-    def insert(self, root, node): 
-        if root.val is None: 
-            root = node 
+
+    def insert(self, root, node):
+        if root.val is None:
+            root = node
             root.size = root.size + 1
-        else: 
-            if root.val < node.val: 
-      #          if root.right is None: 
-      #              root.right = node 
+        else:
+            if root.val < node.val:
+      #          if root.right is None:
+      #              root.right = node
       #              root.size = root.size + 1
-      #          else: 
-                self.insert(root.right, node) 
-            elif root.val > node.val: 
-      #          if root.left is None: 
-     #               root.left = node 
+      #          else:
+                self.insert(root.right, node)
+            elif root.val > node.val:
+      #          if root.left is None:
+     #               root.left = node
      #               root.size = root.size + 1
-                self.insert(root.left, node) 
+                self.insert(root.left, node)
         return root
-                    
+
     def remove(self, root, value):
         ''' For deleting the node '''
         if root is None:
@@ -171,13 +156,13 @@ class Solution:
             # first get the inorder successor
             temp = self.minValueNode(root.right)
             root.val = temp.val
-            
-            #这样做 左数不变, 自己的key变个数字,然后右树变一下
-            
-            
+
+            #这样做 左树不变, 自己的key变个数字,然后右树变一下
+
+
             root.right = self.remove(root.right, temp.val)
         return root
-    
+
     def minValueNode(self, root):
         current = root
 ##直接root.left
@@ -186,13 +171,9 @@ class Solution:
             current = current.left
 
         return current
-    
 
-        
+
+
 T = Solution()
 root = T.remove(root,2)
 print(T.printTree(root))
-
-
-
-

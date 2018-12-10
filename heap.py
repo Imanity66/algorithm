@@ -13,7 +13,7 @@ def sift_up(arr,i):
     if larget !=i:
         arr[larger], arr[i] = arr[i], arr[larget]
         sift_up(arr, larger)
-        
+
 arr = [0, 1, 5, 6, 8, 01]
 sift_up(arr, len(arr) - 1)
 print(arr)
@@ -30,7 +30,7 @@ def sift_down(array, index):
     if small != index:
         array[small], array[index] = array[index], array[small]
         sift_down(array, small)
-        
+
 def sift_down(array, index):
     left = index * 2 + 1
     right = index * 2 + 2
@@ -42,12 +42,20 @@ def sift_down(array, index):
             smaller = right
         if smaller == index:
             break
-        
+
         array[index] , array[smaller] = array[smaller], array[index]
         index = smaller
         left = index * 2 + 1
         right = index * 2 + 2
-        
-        
-        
-        
+
+heapify all element O(n), call pop k times  O(k logn)
+time cost O(n + k logn)
+import heapq
+def kSmallest(array, k):
+    if not array:
+        return []
+    res = []
+    heapq.heapify(array)
+    for i in range(k):
+        res.append(heapq.heappop(array))
+    return res
