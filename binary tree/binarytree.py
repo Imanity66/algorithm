@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+Class 22 Binary Tree
 """
 Created on Sat Oct 27 23:23:40 2018
 
@@ -54,22 +54,38 @@ def get_height(root):
 def level(root):
     q = [root]
     next = []
-    line = []
+    curr = []
     while q:
         head = q.pop(0)
         if head.left:
             next.append(head.left)
         if head.right:
             next.append(head.right)
-        line.append(head.val)
+        curr.append(head.val)
         
         if not q:
-            print(line)
+            print(curr)
             if next:
                 q = next
                 next = []
-                line = []
-#做一个分支的就行,用递归 
+                curr = []
+def level(root):
+    frontier = [root]
+    while frontier:
+        next = []
+        curr = []
+        for u in frontier:
+            curr.append(u.val)
+            if u.left:
+                next.append(u.left)
+            if u.right:
+                next.append(u.right)
+        print(curr)
+        frontier = next
+
+
+#做一个分支的就行,用递归
+#下面层变化完了之后, 上面层其实还没变, 1的left还是2, 1的right还是3, 然后操作就会把上面的东西翻到最下面
 def upside_bst(root):
     if not root:
         return root
@@ -81,3 +97,30 @@ def upside_bst(root):
     root.left = None
     root.right = None
     return left_tree
+
+
+Invert a binary tree 左右反一下
+
+def invert(root):
+    if nor root:
+        return
+    invert(root.left)
+    invert(root.right)
+    root.left, root.right = root.right, root.left
+    return
+    
+给一个排好序的整数序列(list), 把他插成一个balanced BST
+
+def bst(nums, start, last):
+    if start > last:
+        return None
+    mid = (start + last) / 2
+    root = TreeNode(nums[mid])
+    root.left = bst(nums, start, mid-1)
+    root.right = bst(nums, mid+1, last)
+    return root
+    
+    
+    
+    
+    
