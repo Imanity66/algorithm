@@ -20,7 +20,16 @@ def remove(str):
     return ''.join(lst[:i]) #join可以把一个list 合并成一个字符串
 
 print (remove("student"))
-
+#for loop 版本
+def remove_letter(str):
+    lst = list(str)# string immutable
+    res = []
+    for j in range(len(lst)):
+        if lst[j] not in ["u","n"]:
+            res.append(lst[j])
+    return "".join(res)
+    
+print (remove_letter("student"))
 
 #去掉头尾的空格，中间部分的空格留一个
 #Time:O(n), space:O(n)
@@ -41,7 +50,7 @@ def remove_space(str):
     return ''.join(lst[:i])
     
     
-#法二  
+#法二  偏好这个
 def remove_space(str):
     if not str or len(str) == 0:
         return str
@@ -54,6 +63,16 @@ def remove_space(str):
         lst.pop()
     return ''.join(lst)
 
+#法三 自写 forloop版本, 满足if条件的加入
+def remove_space(str):
+    str = str.strip(" ")
+    lst = list(str)
+    res = []
+    for i in range(len(lst)):
+        if lst[i] != " " or (lst[i] == " " and lst[i - 1] != " "):
+            res.append(lst[i])
+    return "".join(res)
+print(remove_space("   abc  ed  ef  "))
 2.
 #char de-duplication. given a sorted array
 
@@ -71,17 +90,20 @@ def remove_duplicate(str):
         fast += 1
     return '',join(lst[:slow])
 
+
 #法二
 def remove_duplicate(str):
     if not str or len(str) < 2:
         return str
-    fast = 0
-    lst = []
-    while fast < len(str):
-        if len(lst) == 0 or lst[-1] != str[fast]:
-            lst.append(str[fast])
-        fast += 1
-    return ''.join(lst)
+    lst = list(str)
+    res = [lst[0]]
+    
+    for i in range(1,len(str)):
+        if lst[i] != res[-1]:
+            res.append(lst[i])
+    return ''.join(res)
+        
+print(remove_duplicate("aaabbbccddcc"))
 
 
 # leave only two letters in duplicated section
@@ -99,10 +121,24 @@ def remove_duplicate(str):
         fast += 1
     return '',join(lst[:slow])
 
+#自写 forloop版本, 满足if条件的加入
+def remove_duplicate(str):
+    if not str or len(str) < 2:
+        return str
+    lst = list(str)
+    res = lst[0:2]
+    
+    for i in range(1,len(str)):
+        if lst[i] != res[-2]:
+            res.append(lst[i])
+    return ''.join(res)
+        
+print(remove_duplicate("aaabbbccddcc"))
 3.
-#Reverse
+#Reverse 
 'I love Yahoo' -> 'Yahoo love I'
 注意输入的时候把string先转成list, string  immutable
+由于要换两次, 写函数会比较好
 
 def reverse_helper(lst, left, right):
     while left < right:
@@ -125,7 +161,17 @@ def reverse_string(string):
         i += 1
     return ''.join(lst)
 
-
+#用到split的方法
+    if input is None or len(input) == 0:
+      return input
+    
+    words = input.strip(" ").split(" ")
+    while '' in words:
+      words.remove('')
+    result = words[-1].strip(" ")
+    for i in range(len(words)-2,-1,-1):
+      result += " "+ words[i]
+    return result
 abcdef -> efabcd,reverse(str,k)
 1)ef + abcd = efabcd
 2)reverse(k, end), reverse(0, k), reverse(0, end)
@@ -172,5 +218,41 @@ class RabinKarp:
         return -1
 
 
-
+5.结合题
+又要去掉space 又要reverse, 而且如果只有单词没空格还TM不要reverse
+class Solution(object):
+  def reverse_helper(self, lst, left, right):
+    while left < right:
+      lst[left], lst[right] = lst[right], lst[left]
+      left += 1
+      right -=1
+    return lst
+  def reverseWords(self, input):
+    """
+    input: string input
+    return: string
+    """
+    # write your solution here
+    if input is None or len(input) == 0:
+      return input
+    input = input.strip(" ")
+    lst = list(input)
+    res = []
+    for i in range(len(lst)):
+      if lst[i] != " " or (lst[i] == " " and lst[i-1] !=" "):
+        res.append(lst[i])
+    if " " not in res:
+      return "".join(res)
+    else:
+      
+      self.reverse_helper(res,0,len(res)-1)
+      left = 0
+      right = 0
+      
+      for i in range(len(res)):
+        if i == len(res)-1 or res[i+1] ==" ":
+          right = i
+          self.reverse_helper(res, left, right)
+          left = i+2
+      return "".join(res)
 

@@ -16,7 +16,7 @@ class BinarySearchTree(object):
         self.__root = None
 
     def __query(self, root ,key):
-        if not root:
+        if not 4root:
             return None
 
         if key < root.key:
