@@ -12,7 +12,6 @@ class Queue(object):
     def dequeue(self):
         if self.empty():
             return None
-
         item = self.__items[0]
         del self.__items[0]
         return item
@@ -38,7 +37,7 @@ class Queue(object):
     def enqueue(self, value):
         self.deque.append(value)
         while self.mins and self.mins[-1] > value :
-            self.mins.pop()
+            self.mins.pop()#最后一个元素滚
         self.append(value)
     def dequeue(self):
         value = self.deque.popleft()
@@ -81,19 +80,49 @@ Given a string containing just the characters
  '(', ')', '{', '}', '[' and ']', determine if the input string is valid.
  The brackets must close in the correct order.
 
+对于dictionary来说, 可以用 in  找 key, 但找不到value
+dict.keys()
+dict.values()
+dict.items()
 
+
+[] 和 None 是不一样的
+not [] == True
  def is_valid(brackets):
      left_bracket = []
      matching_bracket = {'(':')', '{':'}', '[': ']'}
      for b in brackets:
          if b in matching_bracket:
              left_bracket.append(b)
-         elif not left_bracket or matching_bracket[left_bracket[-1]] != b:
-             return False
          else:
-             left_bracket.pop()
-     return not left_bracket
- #not + null 返回 True
+             if not left_bracket or matching_bracket[left_bracket[-1] ]!= b:
+                 return False
+             else:
+                 left_bracket.pop()
+    return not left_bracket
+
+
+input = ["(",1, "+", "(", 5, "*", 4, ")", ")"]
+import operator
+def arithetic_experssion_evaluation(terms):
+    nums = []
+    operators = []
+    ops = {"+":operator.add,"-": operator.sub, "*":operator.mul, "/":operator.truediv}
+    for i in terms:
+        if i in ops:
+            operators.append(i)
+        elif i == ")":
+           # right, left = nums.pop(), nums.pop()
+            nums.append(ops[operators.pop()](nums.pop(), nums.pop()))
+        elif i == "(":
+            continue
+        else:
+            nums.append(i)
+    return nums[0]
+
+print(arithetic_experssion_evaluation(input))
+    
+
 
   def score(brackets):
       left = 0
